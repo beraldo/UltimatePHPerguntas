@@ -1,9 +1,29 @@
 <?php
+/**
+ * Ultimate PHPerguntas
+ * 
+ * Este script faz parte do Projeto Prático do curso Ultimate PHP.
+ * O Ultimate PHP é um curso voltado para iniciantes e intermediários em PHP.
+ * Conheça o curso Ultimate PHP acessando http://www.ultimatephp.com.br
+ *
+ * O projeto completo está disponível no Github: https://github.com/beraldo/UltimatePHPerguntas
+ *
+ * @author: Roberto Beraldo Chaiben
+ * @package Ultimate PHPerguntas
+ * @link http://www.ultimatephp.com.br
+ */
+
 
 namespace Controllers;
 
+/**
+ * Controller para gerenciar o login dos usuários
+ */
 class SessionsController
 {
+    /**
+     * Exibe e processa o formulário de login
+     */
     public static function login()
     {
         if ( $_SERVER['REQUEST_METHOD'] == 'POST' )
@@ -19,14 +39,24 @@ class SessionsController
     }
 
 
+    /**
+     * Faz logout do usuário
+     * @return [type] [description]
+     */
     public static function logout()
     {
+        // remove o cookie de autenticação
         self::destroySessionCookie();
 
+        // redireciona para a página inicial
         redirect( getBaseURL() );
     }
 
 
+    /**
+     * Busca as informações presentes no cookie de autenticação
+     * @return array Array com os dados do cookie
+     */
     public static function extractCookieInfo()
     {
         if ( ! isset( $_COOKIE[AUTH_USER_COOKIE_NAME] ) )
@@ -41,14 +71,21 @@ class SessionsController
 
 
 
-
+    /**
+     * Exibe o formulário de login
+     */
     protected static function showLoginForm()
     {
         \View::make( 'login' );
     }
 
+
+    /**
+     * Processa o formulário de login
+     */
     protected static function processLoginForm()
     {
+        // proteção contra CSRF
         \CSRF::Check();
 
         $email = isset( $_POST['email'] ) ? $_POST['email'] : null;
@@ -98,13 +135,17 @@ class SessionsController
             }
             else
             {
+                // busca os dados do usuário para criar os dados no cookie
                 $objUser = new \Models\User;
                 $objUser->find( $user->id );
 
+                // gera um token de acesso
                 $token = $objUser->generateToken();
 
+                // salva o cookie com os dados do usuário
                 self::saveSessionCookieForUser( $objUser );
 
+                // redireciona para a página inicial
                 redirect( getBaseURL() );
             }
         }
@@ -118,8 +159,10 @@ class SessionsController
 
 
 
-
-
+    /**
+     * Salva o cookie de autenticação
+     * @param  \Models\User $user Objeto \Models\User do usuário logado
+     */
     public static function saveSessionCookieForUser( \Models\User $user )
     {
         $cookieData = [

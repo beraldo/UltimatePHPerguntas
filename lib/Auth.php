@@ -1,10 +1,27 @@
 <?php
+/**
+ * Ultimate PHPerguntas
+ * 
+ * Este script faz parte do Projeto Prático do curso Ultimate PHP.
+ * O Ultimate PHP é um curso voltado para iniciantes e intermediários em PHP.
+ * Conheça o curso Ultimate PHP acessando http://www.ultimatephp.com.br
+ *
+ * O projeto completo está disponível no Github: https://github.com/beraldo/UltimatePHPerguntas
+ *
+ * @author: Roberto Beraldo Chaiben
+ * @package Ultimate PHPerguntas
+ * @link http://www.ultimatephp.com.br
+ */
 
+
+/**
+ * Class para verificação de usuário logado e restrições de acesso
+ */
 class Auth
 {
     /**
-     * Retorna o usuário logado ou null
-     * @return mixed Objeto User do usuário logado ou null se não estiver logado
+     * Retorna o usuário logado ou null se não estiver logado
+     * @return mixed Objeto \Models\User do usuário logado ou null se não estiver logado
      */
     public static function user()
     {
@@ -38,6 +55,7 @@ class Auth
     public static function denyNonAdminUser()
     {
         $user = self::user();
+        
         if ( ! $user instanceof \Models\User || ! $user->isAdmin() )
         {
             redirect( getBaseURL() . '/erro-nivel-admin-necessario' );
@@ -50,7 +68,6 @@ class Auth
      */
     public static function checkUser()
     {
-        \Log::info( 'Verificando usuário logado...' );
         $user = self::user();
 
         if ( $user == null )

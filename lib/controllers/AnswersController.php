@@ -1,24 +1,53 @@
 <?php
+/**
+ * Ultimate PHPerguntas
+ * 
+ * Este script faz parte do Projeto Prático do curso Ultimate PHP.
+ * O Ultimate PHP é um curso voltado para iniciantes e intermediários em PHP.
+ * Conheça o curso Ultimate PHP acessando http://www.ultimatephp.com.br
+ *
+ * O projeto completo está disponível no Github: https://github.com/beraldo/UltimatePHPerguntas
+ *
+ * @author: Roberto Beraldo Chaiben
+ * @package Ultimate PHPerguntas
+ * @link http://www.ultimatephp.com.br
+ */
 
 namespace Controllers;
 
+
+/**
+ * Controller de respostas
+ */
 class AnswersController
 {
+    /**
+     * Formulário de resposta a ma pergunta
+     * @param  int $question_id Pergunta à qual será dada uma resposta
+     */
     public static function create( $question_id )
     {
+        // impede acesso a usuário não logado
         \Auth::denyNotLoggedInUsers();
 
+        // busca os dados da pergunta
         $question = new \Models\Question;
         $question->find( $question_id );
+
 
         \View::make( 'answer.create', compact( 'question' ) );
     }
 
 
+    /**
+     * Salva a resposta
+     */
     public static function store()
     {
+        // impede acesso a usuário não logado
         \Auth::denyNotLoggedInUsers();
 
+        // impede ataque por CSRF
         \CSRF::Check();
 
         $questionID = isset( $_POST['question_id'] ) ? (int) $_POST['question_id'] : null;
@@ -38,9 +67,11 @@ class AnswersController
 
         if ( count( $errors ) > 0 )
         {
+            // se ocorrer erro, exibe-os e encerra a execução deste método, usando o return
             return \View::make( 'answer.create', compact( 'errors' ) );
         }
 
+        // busca o usuário logado
         $user = \Auth::user();
         $user_id = $user->getId();
         $now = date( 'Y-m-d H:i:s' );
@@ -56,10 +87,12 @@ class AnswersController
 
         if ( $stmt->execute() )
         {
+            // redireciona para a pergunta, já com a resposta criada
             redirect( getBaseURL() . '/pergunta/' . $questionID );
         }
         else
         {
+            // exibe erro e gera um log com os detalhes do problema
             echo "Erro ao criar resposta";
 
             \Log::error( "Erro ao criar resposta: " .print_r( $stmt->errorInfo(), true ) );

@@ -1,21 +1,41 @@
 <?php
-/*
+/**
+ * Ultimate PHPerguntas
+ * 
  * Este script faz parte do Projeto Prático do curso Ultimate PHP.
- *
- * Autor: Roberto Beraldo Chaiben
- *
+ * O Ultimate PHP é um curso voltado para iniciantes e intermediários em PHP.
  * Conheça o curso Ultimate PHP acessando http://www.ultimatephp.com.br
+ *
+ * O projeto completo está disponível no Github: https://github.com/beraldo/UltimatePHPerguntas
+ *
+ * @author: Roberto Beraldo Chaiben
+ * @package Ultimate PHPerguntas
+ * @link http://www.ultimatephp.com.br
  */
 
+/*
+ * Este script é responsável por criar todas as rotas da aplicação, atribuindo a devida ação a cada uma delas
+ */
+
+
+// inclui o arquivo de inicialização
 require_once 'init.php';
 
+// instancia o Slim
 $app = new \Slim\Slim();
+
+
+
+/* =======================
+   Rotas da Aplicação
+   ===================== */
 
 // página inicial
 $app->get('/', function ()
 {
     \Controllers\PagesController::home();
 });
+
 
 // login
 // GET: exibe formulário de login
@@ -32,12 +52,12 @@ $app->get( '/logout', function()
     \Controllers\SessionsController::logout();
 });
 
+
 // página de erro ao tentar acessar uma rota restrita a usuários logados
 $app->get( '/erro-login-necessario', function()
 {
     \View::make( 'erro-login-necessario' );
 });
-
 
 // página de erro ao tentar acessar uma rota restrita a administradores
 $app->get( '/erro-nivel-admin-necessario', function()
@@ -121,5 +141,9 @@ $app->get( '/remover-resposta/:answer_id/:question_id', function ( $answer_id, $
 });
 
 
+
+
+
+// executa a aplicação
 $app->run();
 

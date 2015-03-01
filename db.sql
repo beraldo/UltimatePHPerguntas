@@ -1,3 +1,18 @@
+-- 
+-- Ultimate PHPerguntas
+-- 
+-- Este script faz parte do Projeto Prático do curso Ultimate PHP.
+-- O Ultimate PHP é um curso voltado para iniciantes e intermediários em PHP.
+-- Conheça o curso Ultimate PHP acessando http://www.ultimatephp.com.br
+-- 
+-- O projeto completo está disponível no Github: https://github.com/beraldo/UltimatePHPerguntas
+-- 
+-- @author: Roberto Beraldo Chaiben
+-- @package Ultimate PHPerguntas
+-- @link http://www.ultimatephp.com.br
+-- 
+
+
 -- Arquivo com os comandos SQL para criar o banco de dados e as tabelas
 --
 -- Se utilizar esse sistema em produção, não mantenha esse arquivo na pasta pública, para que a estrutura das tabelas não fique visível pelo navegador

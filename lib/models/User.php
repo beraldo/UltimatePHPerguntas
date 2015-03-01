@@ -1,7 +1,24 @@
 <?php
+/**
+ * Ultimate PHPerguntas
+ * 
+ * Este script faz parte do Projeto Prático do curso Ultimate PHP.
+ * O Ultimate PHP é um curso voltado para iniciantes e intermediários em PHP.
+ * Conheça o curso Ultimate PHP acessando http://www.ultimatephp.com.br
+ *
+ * O projeto completo está disponível no Github: https://github.com/beraldo/UltimatePHPerguntas
+ *
+ * @author: Roberto Beraldo Chaiben
+ * @package Ultimate PHPerguntas
+ * @link http://www.ultimatephp.com.br
+ */
+
 
 namespace Models;
 
+/**
+ * Model que representa um usuário
+ */
 class User extends BaseModel
 {
     const STATUS_ACTIVE = 1;
@@ -38,6 +55,11 @@ class User extends BaseModel
         return $token;
     }
 
+
+    /**
+     * Atualiza o token de acesso, no próprio objeto e no banco de dados
+     * @param  string $token Token a ser usado na atualização
+     */
     public function updateToken( $token )
     {
         $this->token = $token;
@@ -52,6 +74,11 @@ class User extends BaseModel
     }
 
 
+    /**
+     * Altera a senha do usuário
+     * @param  string $password Nova senha, sem aplicação do hash
+     * @return bool     TRUE em caso de sucesso, FALSE caso contrário
+     */
     public function changePassword( $password )
     {
         $hashedNewPassword = \Hash::password( $password );

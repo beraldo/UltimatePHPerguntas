@@ -1,3 +1,18 @@
+<?php
+/**
+ * Ultimate PHPerguntas
+ * 
+ * Este script faz parte do Projeto Prático do curso Ultimate PHP.
+ * O Ultimate PHP é um curso voltado para iniciantes e intermediários em PHP.
+ * Conheça o curso Ultimate PHP acessando http://www.ultimatephp.com.br
+ *
+ * O projeto completo está disponível no Github: https://github.com/beraldo/UltimatePHPerguntas
+ *
+ * @author: Roberto Beraldo Chaiben
+ * @package Ultimate PHPerguntas
+ * @link http://www.ultimatephp.com.br
+ */
+?>
 <!DOCTYPE html>
 <html lang="pt">
   <head>
@@ -91,7 +106,7 @@
     </div><!-- /.container -->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="<?php getBaseURL() ?>/js/jquery-1.11.2.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="<?php getBaseURL() ?>/js/bootstrap.min.js"></script>
   </body>
