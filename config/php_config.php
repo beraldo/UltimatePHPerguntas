@@ -60,6 +60,6 @@ else
 {
     // ambiente de produção
 
-    define( 'END', 'prod' );
+    define( 'ENV', 'prod' );
     require_once APP_ROOT_PATH . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'env' . DIRECTORY_SEPARATOR . 'prod.php';
 }
