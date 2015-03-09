@@ -63,11 +63,13 @@ class User extends BaseModel
     public function updateToken( $token )
     {
         $this->token = $token;
+        $now = date( 'Y-m-d H:i:s' );
 
         $DB = new \DB;
-        $sql = "UPDATE users SET token = :token WHERE id = :id";
+        $sql = "UPDATE users SET token = :token, updated_at = :now WHERE id = :id";
         $stmt = $DB->prepare( $sql );
         $stmt->bindParam( ":token", $token );
+        $stmt->bindParam( ":now", $now );
         $stmt->bindParam( ":id", $this->id, \PDO::PARAM_INT );
 
         $stmt->execute();
@@ -84,11 +86,13 @@ class User extends BaseModel
         $hashedNewPassword = \Hash::password( $password );
         $this->password = $hashedNewPassword;
         $userID = $this->getId();
+        $now = date( 'Y-m-d H:i:s' );
 
         $DB = new \DB;
-        $sql = "UPDATE users SET password = :password WHERE id = :id";
+        $sql = "UPDATE users SET password = :password, updated_at = :now WHERE id = :id";
         $stmt = $DB->prepare( $sql );
         $stmt->bindParam( ':password', $hashedNewPassword );
+        $stmt->bindParam( ":now", $now );
         $stmt->bindParam( ':id', $userID, \PDO::PARAM_INT );
 
         if ( $stmt->execute() )
