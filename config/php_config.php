@@ -29,8 +29,8 @@
  * Veja mais aqui: http://laravel.com/docs/4.2/configuration#environment-configuration
  */
 $devHostnames = [
-    'aphrodite.local',
-    'venus.local',
+    'piemonte.local',
+    'bordeaux.local',
 ];
 
 

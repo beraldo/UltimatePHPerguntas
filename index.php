@@ -22,7 +22,7 @@
 require_once 'init.php';
 
 // instancia o Slim
-$app = new \Slim\Slim();
+$app = new \Slim\App();
 
 
 
@@ -40,11 +40,10 @@ $app->get('/', function ()
 // login
 // GET: exibe formulário de login
 // POST: processa o formulário de login
-$app->map('/login', function()
+$app->map(['GET', 'POST'], '/login', function()
 {
     \Controllers\SessionsController::login();
-})->via( 'GET', 'POST' );
-
+});
 
 // logout (sair)
 $app->get( '/logout', function()
@@ -111,16 +110,22 @@ $app->post( '/enviar-pergunta', function()
 
 
 // exibe a pergunta
-$app->get( '/pergunta/:id', function ( $id )
+$app->get( '/pergunta/{id}', function ( $request )
 {
+    $id = $request->getAttribute('route')->getArgument('id');
     \Controllers\QuestionsController::show( $id );
 });
 
+
+
 // exibe o formulário de resposta
-$app->get( '/responder/:question_id', function ( $question_id )
+$app->get( '/responder/{question_id}', function ( $request )
 {
+    $question_id = $request->getAttribute('route')->getArgument('question_id');
     \Controllers\AnswersController::create( $question_id );
 });
+
+
 
 $app->post( '/enviar-resposta', function()
 {
@@ -129,21 +134,23 @@ $app->post( '/enviar-resposta', function()
 
 
 // remover pergunta
-$app->get( '/remover-pergunta/:question_id', function ( $question_id )
+$app->get( '/remover-pergunta/{question_id}', function ( $request )
 {
+    $question_id = $request->getAttribute('route')->getArgument('question_id');
     \Controllers\QuestionsController::delete( $question_id );
 });
 
+
+
+
 // remover resposta
-$app->get( '/remover-resposta/:answer_id/:question_id', function ( $answer_id, $question_id )
+$app->get( '/remover-resposta/{answer_id}/{question_id}', function ( $request )
 {
+    $answer_id = $request->getAttribute('route')->getArgument('answer_id');
+    $question_id = $request->getAttribute('route')->getArgument('question_id');
     \Controllers\AnswersController::delete( $answer_id, $question_id );
 });
 
 
-
-
-
 // executa a aplicação
 $app->run();
-
